@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martín Genskowski | Professional Footballer</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚽%3C/text%3E%3C/svg%3E">
+    <style>
+        /* IMPORTACIÓN DE FUENTES */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+        /* PALETA DE COLORES ULTRA-MINIMALISTA */
+        :root {
+            --bg-color: #ffffff;      
+            --text-color: #111111;    
+            --subtle-text: #666666;   
+            --line-color: #e0e0e0;    
+            --hover-color: #f9f9f9;   
+            
+            /* Fuentes */
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --navbar-height: 70px;
+        }
+
+        /* RESETEO BÁSICO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased; 
+            padding-top: var(--navbar-height); 
+        }
+
+        /* --- CONTROL DE IDIOMAS --- */
+        body.es .lang-en { display: none !important; }
+        body.en .lang-es { display: none !important; }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: var(--subtle-text);
+        }
+
+        /* --- NAVBAR --- */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--navbar-height);
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+        }
+
+        /* Botón Hamburguesa */
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-btn .bar {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Selector de Idioma */
+        .lang-selector {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn {
+            cursor: pointer;
+            color: var(--subtle-text);
+            transition: color 0.3s;
+        }
+
+        .lang-btn.active {
+            color: var(--text-color);
+        }
+
+        .lang-separator {
+            margin: 0 8px;
+            color: var(--line-color);
+        }
+
+        /* Menú Lateral (Side Menu) */
+        #side-menu {
+            position: fixed;
+            top: 0;
+            left: -100%; 
+            width: 300px;
+            max-width: 80%;
+            height: 100vh;
+            background-color: var(--bg-color);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 100px 5%;
+            transition: left 0.4s ease;
+        }
+
+        #side-menu.open {
+            left: 0;
+        }
+
+        #side-menu a {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            border-bottom: 1px solid transparent;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        #side-menu a:hover {
+            color: var(--text-color);
+            border-bottom: 1px solid var(--text-color);
+        }
+
+        #menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Animación de Hamburguesa a "X" */
+        .menu-btn.open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-btn.open .bar:nth-child(2) { opacity: 0; }
+        .menu-btn.open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* --- CONTENEDOR CENTRAL --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* --- SECCIÓN 1: HERO (FOTO DE FONDO CON TEXTO SUPERPUESTO) --- */
+        #hero {
+            position: relative;
+            height: calc(100vh - var(--navbar-height));
+            
+            background-image: url('img/principal.jpeg'); 
+            background-size: cover;
+            background-position: center 15%; 
+            background-repeat: no-repeat;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: center;
+            border-bottom: 1px solid var(--line-color);
+        }
+        #hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2; 
+            width: 100%;
+            text-align: center;
+            padding: 40px 5% 60px 5%; 
+            color: #ffffff; 
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.6); 
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #e0e0e0;
+            font-weight: 400;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+        }
+
+        /* --- SECCIÓN 2: PERFIL --- */
+        .perfil-bloque {
+            padding: 80px 5%;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--line-color);
+            font-size: 1.1rem;
+        }
+
+        .info-label {
+            color: var(--subtle-text);
+            font-weight: 300;
+        }
+
+        .info-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* --- BOTONES DE CONTACTO ESTILO APPLE --- */
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .apple-btn {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f7; 
+            border-radius: 18px; 
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1px solid transparent;
+        }
+
+        .apple-btn:hover {
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: scale(1.02);
+            border: 1px solid var(--line-color);
+        }
+
+        .btn-icon {
+            font-size: 1.5rem;
+            margin-right: 18px;
+            background-color: #ffffff;
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .btn-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .btn-label {
+            font-size: 0.8rem;
+            color: var(--subtle-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .btn-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .idiomas-texto {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--subtle-text);
+            font-size: 0.95rem;
+        }
+
+        /* --- SECCIÓN 3: CARRERA --- */
+        #carrera {
+            padding: 100px 5%;
+            border-bottom: 1px solid var(--line-color);
+            background-color: var(--hover-color);
+        }
+
+        .timeline-container {
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 2px;
+            background-color: var(--line-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 70px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: 17px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            border: 2px solid var(--text-color);
+            z-index: 1;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .timeline-logo {
+            width: 80px;  
+            height: 80px; 
+            object-fit: contain;
+            margin-right: 20px;
+            background-color: #fff; 
+            border-radius: 50%;
+            border: 1px solid var(--line-color);
+            padding: 5px;
+        }
+
+        .timeline-title-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline-year {
+            font-size: 0.95rem;
+            color: var(--subtle-text);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .timeline-team {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--text-color);
+        }
+
+        .timeline-photo {
+            width: 100%;
+            max-height: 450px;
+            border-radius: 20px;
+            object-fit: cover;
+            transition: filter 0.5s ease;
+            border: 1px solid var(--line-color);
+            display: block;
+        }
+
+        /* --- SECCIÓN 4: HIGHLIGHTS --- */
+        #highlights {
+            padding: 100px 5%;
+            background-color: #050505; 
+            color: #ffffff;
+        }
+
+        #highlights .section-title {
+            color: #ffffff;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border: 1px solid #333;
+            border-radius: 12px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 5%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            font-weight: 300;
+        }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 3rem; }
+            .timeline-container::before { left: 14px; }
+            .timeline-item { padding-left: 50px; margin-bottom: 50px; }
+            .timeline-item::before { left: 7px; top: 15px; }
+            .timeline-logo { width: 60px; height: 60px; margin-right: 15px; } 
+            .timeline-team { font-size: 1.4rem; }
+            .timeline-photo { max-height: 250px; }
+            .info-item { flex-direction: column; align-items: flex-start; }
+            .info-value { text-align: left; margin-top: 5px; }
+            .apple-btn { padding: 12px 15px; }
+            .btn-icon { width: 40px; height: 40px; min-width: 40px; margin-right: 12px; font-size: 1.3rem; }
+            .btn-value { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body class="es">
+
+    <nav id="navbar">
+        <div class="menu-btn" id="menu-btn" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="lang-selector">
+            <span class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</span>
+            <span class="lang-separator">|</span>
+            <span class="lang-btn" id="btn-en" onclick="setLang('en')">EN</span>
+        </div>
+    </nav>
+
+    <div id="side-menu">
+        <a href="#hero" onclick="toggleMenu()">
+            <span class="lang-es">Inicio</span><span class="lang-en">Home</span>
+        </a>
+        <a href="#perfil" onclick="toggleMenu()">
+            <span class="lang-es">Perfil</span><span class="lang-en">Profile</span>
+        </a>
+        <a href="#carrera" onclick="toggleMenu()">
+            <span class="lang-es">Carrera</span><span class="lang-en">Experience</span>
+        </a>
+        <a href="#highlights" onclick="toggleMenu()">
+            <span class="lang-es">Mejores Momentos</span><span class="lang-en">Highlights</span>
+        </a>
+    </div>
+    <div id="menu-overlay" onclick="toggleMenu()"></div>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Martín Genskowski</h1>
+            <p>
+                <span class="lang-es">Defensa Central / Lateral Derecho</span>
+                <span class="lang-en">Centre Back / Right Back</span>
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <section id="perfil">
+            <div class="perfil-bloque">
+                <h2 class="section-title">
+                    <span class="lang-es">Información Personal</span>
+                    <span class="lang-en">Personal Info</span>
+                </h2>
+                <ul class="info-list">
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Nacimiento</span><span class="lang-en">Date of Birth</span></span> 
+                        <span class="info-value">28/06/2002</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Edad</span><span class="lang-en">Age</span></span> 
+                        <span class="info-value" id="edad-martin"></span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Estatura</span><span class="lang-en">Height</span></span> 
+                        <span class="info-value">5'11 (1.81m)</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Peso</span><span class="lang-en">Weight</span></span> 
+                        <span class="info-value">189 LBS (85kg)</span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Nacionalidad</span><span class="lang-en">Nationality</span></span> 
+                        <span class="info-value"><span class="lang-es">Chileno</span><span class="lang-en">Chilean</span></span>
+                    </li>
+                    <li class="info-item">
+                        <span class="info-label"><span class="lang-es">Posición</span><span class="lang-en">Position</span></span> 
+                        <span class="info-value">
+                            <span class="lang-es">Defensa Central / Lat. Derecho</span>
+                            <span class="lang-en">Centre Back / Right Back</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="perfil-bloque">
+                <h2 class="section-title">
+                    <span class="lang-es">Contacto</span>
+                    <span class="lang-en">Contact</span>
+                </h2>
+                
+                <div class="contact-buttons">
+                    <a href="tel:+56962865413" class="apple-btn">
+                        <span class="btn-icon">📞</span>
+                        <span class="btn-text">
+                            <span class="btn-label"><span class="lang-es">Teléfono</span><span class="lang-en">Phone</span></span>
+                            <span class="btn-value">+56 9 6286 5413</span>
+                        </span>
+                    </a>
+                    
+                    <a href="mailto:genskowskimartin@gmail.com" class="apple-btn">
+                        <span class="btn-icon">✉️</span>
+                        <span class="btn-text">
+                            <span class="btn-label"><span class="lang-es">Correo</span><span class="lang-en">Email</span></span>
+                            <span class="btn-value">genskowskimartin@gmail.com</span>
+                        </span>
+                    </a>
+                    
+                    <a href="https://instagram.com/_mgenskowski4" target="_blank" class="apple-btn">
+                        <span class="btn-icon">📱</span>
+                        <span class="btn-text">
+                            <span class="btn-label">Instagram</span>
+                            <span class="btn-value">@_mgenskowski4</span>
+                        </span>
+                    </a>
+                </div>
+
+                <div class="idiomas-texto">
+                    <span class="lang-es"><strong>Idiomas:</strong> Español, Inglés</span>
+                    <span class="lang-en"><strong>Languages:</strong> Spanish, English</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="carrera">
+            <h2 class="section-title">
+                <span class="lang-es">Carrera Profesional</span>
+                <span class="lang-en">Experience</span>
+            </h2>
+            <div class="timeline-container">
+                
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyKqcfHcMplk42cOLoQr6Ij9MH6JlNHrgh4A&s" alt="Logo Fk Garliava" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2025 - 2026</span>
+                            <h3 class="timeline-team">Fk Garliava</h3>
+                        </div>
+                    </div>
+                    <img src="img/fkg.jpeg" alt="Martín jugando en Fk Garliava" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc_27tGYmi84YI44WHXk7olR9Yb2-OK6tGGg&s" alt="Logo Chimbarongo FC" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2024</span>
+                            <h3 class="timeline-team">Chimbarongo FC</h3>
+                        </div>
+                    </div>
+                    <img src="img/chimba.jpeg" alt="Martín jugando en Chimbarongo" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Logo_Deportes_Linares.png" alt="Logo Deportes Linares" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2023</span>
+                            <h3 class="timeline-team">Deportes Linares</h3>
+                        </div>
+                    </div>
+                    <img src="img/linares.jpeg" alt="Martín jugando en Deportes Linares" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Logo-DeportesValdivia2018.png" alt="Logo Deportes Valdivia" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2022</span>
+                            <h3 class="timeline-team">Deportes Valdivia</h3>
+                        </div>
+                    </div>
+                    <img src="img/val.jpeg" alt="Martín jugando en Deportes Valdivia" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://static.wikia.nocookie.net/futbolchileno/images/c/cf/EmblemaO%27Higgins.png/revision/latest?cb=20210615074912&path-prefix=es" alt="Logo O'Higgins" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2019 - 2022</span>
+                            <h3 class="timeline-team">O'Higgins 
+                                <span class="lang-es">(Juvenil)</span><span class="lang-en">(Youth)</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <img src="img/oh.jpeg" alt="Martín jugando en O'Higgins" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Emblema_del_Club_Universidad_de_Chile.png" alt="Logo U de Chile" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2017 - 2018</span>
+                            <h3 class="timeline-team">U. de Chile 
+                                <span class="lang-es">(Juvenil)</span><span class="lang-en">(Youth)</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <img src="img/u.jpg" alt="Martín jugando en U de Chile" class="timeline-photo">
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Escudo_Palestino_Oficial.png" alt="Logo Palestino" class="timeline-logo">
+                        <div class="timeline-title-wrap">
+                            <span class="timeline-year">2012 - 2017</span>
+                            <h3 class="timeline-team">Palestino 
+                                <span class="lang-es">(Juvenil)</span><span class="lang-en">(Youth)</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <img src="img/palestino.jpg" alt="Martín jugando en Palestino" class="timeline-photo">
+                </div>
+
+            </div>
+        </section>
+
+    </div> 
+
+    <section id="highlights">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-es">Mejores Momentos</span>
+                <span class="lang-en">Video Highlights</span>
+            </h2>
+            <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/CfIbLttNBDU?si=2dG2HUDBWN8w3lTv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> Martín Genskowski. 
+            <span class="lang-es">Todos los derechos reservados.</span>
+            <span class="lang-en">All rights reserved.</span>
+        </p>
+    </footer>
+
+    <script>
+        // 1. Calcular la Edad Automáticamente
+        function calcularEdad(fechaNacimiento) {
+            const hoy = new Date();
+            const nacimiento = new Date(fechaNacimiento);
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+            const diferenciaMeses = hoy.getMonth() - nacimiento.getMonth();
+            if (diferenciaMeses < 0 || (diferenciaMeses === 0 && hoy.getDate() < nacimiento.getDate())) {
+                edad--;
+            }
+            return edad;
+        }
+        document.getElementById("edad-martin").innerText = calcularEdad("2002-06-28");
+
+        // 2. Controlar la Barra de Navegación Lateral (Hamburguesa)
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('open');
+            document.getElementById('menu-overlay').classList.toggle('active');
+            document.getElementById('menu-btn').classList.toggle('open');
+        }
+
+        // 3. Controlar el Cambio de Idioma
+        function setLang(lang) {
+            document.body.className = lang;
+            document.getElementById('btn-es').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+
+        // 4. Actualizar el Año del Footer Automáticamente
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
