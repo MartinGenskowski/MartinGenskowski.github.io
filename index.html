@@ -606,7 +606,43 @@
             border: 1px solid var(--line-color);
             display: block;
         }
+        /* --- BOTÓN DE TRANSFERMARKT --- */
+        .tm-link-container {
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid var(--line-color);
+            padding-top: 30px;
+        }
 
+        .tm-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--tm-dark);
+            color: #ffffff !important;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .tm-link-btn:hover {
+            background-color: #061022;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(10, 28, 58, 0.2);
+        }
+
+        .tm-link-btn svg {
+            width: 18px !important;
+            height: 18px !important;
+            min-width: 18px;
+            margin-left: 10px;
+            fill: currentColor;
+            display: inline-block;
+            vertical-align: middle;
+        }
         /* --- SECCIÓN 4: HIGHLIGHTS --- */
         #highlights {
             padding: 100px 5%;
@@ -729,7 +765,7 @@
                     </li>
                     <li class="info-item">
                         <span class="info-label"><span class="lang-es">Estatura</span><span class="lang-en">Height</span></span> 
-                        <span class="info-value">5'11 (1.81m)</span>
+                        <span class="info-value">5'11 (1.82m)</span>
                     </li>
                     <li class="info-item">
                         <span class="info-label"><span class="lang-es">Peso</span><span class="lang-en">Weight</span></span> 
