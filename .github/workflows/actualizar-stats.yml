@@ -1,36 +1,30 @@
-name: Actualizar Transfermarkt Stats
+name: Actualizar Partidos
 
 on:
   schedule:
-    # Se ejecuta todos los lunes a las 03:00 AM UTC
-    - cron: '0 3 * * 1'
-  workflow_dispatch:
+    - cron: '0 3 * * *' # Se ejecuta todas las noches a las 3 AM
+  workflow_dispatch: # Permite ejecutarlo manual
 
 permissions:
   contents: write
 
 jobs:
-  scrape:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clonar el repositorio
-        uses: actions/checkout@v4
-
-      - name: Instalar Python
+      - uses: actions/checkout@v4
+      - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Instalar Dependencias
+      - name: Instalar dependencias
         run: pip install -r requirements.txt
-
-      - name: Ejecutar Scraper
-        run: python scraper.py
-
-      - name: Guardar datos en GitHub (Commit)
+      - name: Ejecutar script
+        run: python update_matches.py
+      - name: Guardar cambios
         run: |
-          git config --global user.name "GitHub Action Bot"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
           git add stats.json
-          git commit -m "🤖 Stats de Transfermarkt actualizadas automáticamente" || echo "Sin cambios nuevos"
+          git commit -m "Actualización automática de partidos" || exit 0
           git push
