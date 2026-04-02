@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Martín Genskowski | Professional Footballer</title>
+    
+    <meta property="og:title" content="Martín Genskowski | Professional Footballer">
+    <meta property="og:description" content="Perfil oficial, carrera, estadísticas y mejores momentos de Martín Genskowski.">
+    <meta property="og:image" content="https://martingenskowski.github.io/img/principal.jpeg">
+    <meta property="og:url" content="https://martingenskowski.github.io/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Martín Genskowski | Professional Footballer">
+    <meta name="twitter:description" content="Perfil oficial, carrera, estadísticas y mejores momentos de Martín Genskowski.">
+    <meta name="twitter:image" content="https://martingenskowski.github.io/img/principal.jpeg">
+
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚽%3C/text%3E%3C/svg%3E">
     <style>
+        /* Aquí siguen tus estilos (CSS) como antes... */
         /* IMPORTACIÓN DE FUENTES */
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
 
         /* PALETA DE COLORES ULTRA-MINIMALISTA */
         :root {
@@ -21,6 +34,12 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Inter', sans-serif;
             --navbar-height: 70px;
+
+            /* Colores Transfermarkt */
+            --tm-blue: #4285f4;
+            --tm-dark: #0a1c3a;
+            --tm-yellow: #f4d03f;
+            --tm-red: #8B0000;
         }
 
         /* RESETEO BÁSICO */
@@ -337,6 +356,173 @@
             font-size: 0.95rem;
         }
 
+        /* --- SECCIÓN NUEVA: ESTADÍSTICAS TRANSFERMARKT --- */
+        .stats-wrapper {
+            background-color: #fcfcfc;
+            border: 1px solid var(--line-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 10px;
+        }
+
+        .stats-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .stats-league-title {
+            color: var(--tm-blue);
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+        }
+
+        .stats-league-subtitle {
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .stats-league-icon svg {
+            width: 40px;
+            height: 25px;
+            fill: #888;
+        }
+
+        .stats-divider {
+            height: 4px;
+            background-color: #e0e0e0;
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .stats-divider-fill {
+            background-color: var(--tm-blue);
+            width: 40%; /* Representa visualmente la línea azul */
+            height: 100%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 40px;
+            margin-bottom: 35px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .stat-label-box {
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+            color: #1a1a1a;
+        }
+
+        .stat-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SVGs Íconos */
+        .stat-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #333;
+        }
+        
+        .stat-icon.green svg { fill: #6a9c3d; }
+
+        /* Tarjetas CSS */
+        .card-icon {
+            width: 16px;
+            height: 22px;
+            border-radius: 2px;
+        }
+        .card-yellow { background-color: var(--tm-yellow); }
+        .card-red { background-color: var(--tm-red); }
+        .card-second-yellow {
+            background: linear-gradient(135deg, var(--tm-yellow) 50%, var(--tm-red) 50%);
+        }
+
+        .stat-number {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--tm-blue);
+        }
+
+        /* Anillos Circulares (Rings) */
+        .stats-rings-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .ring-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .circle-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        /* Configuración de porcentajes */
+        .ring-100 { background: conic-gradient(var(--tm-dark) 100%, #f0f0f0 0); }
+        .ring-99 { background: conic-gradient(var(--tm-dark) 99%, #f0f0f0 0); }
+        .ring-0 { background: conic-gradient(var(--tm-dark) 0%, #f0f0f0 100%); }
+
+        .circle-inner {
+            width: 85px;
+            height: 85px;
+            background: var(--bg-color); /* Igual al fondo de la tarjeta */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--tm-dark);
+        }
+        
+        .circle-text span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .ring-label {
+            font-size: 0.95rem;
+            color: var(--tm-dark);
+            line-height: 1.3;
+        }
+
+
         /* --- SECCIÓN 3: CARRERA --- */
         #carrera {
             padding: 100px 5%;
@@ -477,6 +663,14 @@
             .apple-btn { padding: 12px 15px; }
             .btn-icon { width: 40px; height: 40px; min-width: 40px; margin-right: 12px; font-size: 1.3rem; }
             .btn-value { font-size: 1rem; }
+            
+            /* Ajustes stats móvil */
+            .stats-grid { grid-template-columns: 1fr; gap: 0; }
+            .stats-rings-container { grid-template-columns: 1fr; gap: 30px; margin-top: 20px;}
+            .circle-wrap { width: 90px; height: 90px; }
+            .circle-inner { width: 70px; height: 70px; }
+            .circle-text { font-size: 1.2rem; }
+            .stats-divider-fill { width: 100%; }
         }
     </style>
 </head>
@@ -597,7 +791,127 @@
                     <span class="lang-en"><strong>Languages:</strong> Spanish, English</span>
                 </div>
             </div>
-        </section>
+
+            <div class="perfil-bloque" id="estadisticas">
+                <h2 class="section-title">
+                    <span class="lang-es">Estadísticas</span>
+                    <span class="lang-en">Statistics</span>
+                </h2>
+
+                <div class="stats-wrapper">
+                    <div class="stats-header-top">
+                        <div>
+                            <div class="stats-league-title">I Lyga 2026</div>
+                            <div class="stats-league-subtitle">
+                                <span class="lang-es">3 partidos posibles</span>
+                                <span class="lang-en">3 possible matches</span>
+                            </div>
+                        </div>
+                        <div class="stats-league-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="stats-divider">
+                        <div class="stats-divider-fill"></div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stats-col-left">
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v4H7zm8 0h2v4h-2zm-4 0h2v4h-2z"/></svg>
+                                    </div>
+                                    <span class="lang-es">Partidos</span><span class="lang-en">Matches</span>
+                                </div>
+                                <div class="stat-number" id="stat-partidos">3</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon">
+                                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#333" stroke-width="2"/><path d="M12 2l2.5 6h-5L12 2zm0 20l-2.5-6h5L12 22z" fill="none" stroke="#333" stroke-width="2"/></svg>
+                                    </div>
+                                    <span class="lang-es">Goles</span><span class="lang-en">Goals</span>
+                                </div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon green">
+                                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#6a9c3d" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#6a9c3d" stroke-width="2"/></svg>
+                                    </div>
+                                    <span class="lang-es">Asistencias</span><span class="lang-en">Assists</span>
+                                </div>
+                                <div class="stat-number">0</div>
+                            </div>
+                        </div>
+
+                        <div class="stats-col-right">
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon"><div class="card-icon card-yellow"></div></div>
+                                    <span class="lang-es">Tarjetas amarillas</span><span class="lang-en">Yellow cards</span>
+                                </div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon"><div class="card-icon card-second-yellow"></div></div>
+                                    <span class="lang-es">Segundas tarjetas amarillas</span><span class="lang-en">Second yellow cards</span>
+                                </div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label-box">
+                                    <div class="stat-icon"><div class="card-icon card-red"></div></div>
+                                    <span class="lang-es">Tarjetas rojas</span><span class="lang-en">Red cards</span>
+                                </div>
+                                <div class="stat-number">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-rings-container">
+                        <div class="ring-item">
+                            <div class="circle-wrap ring-100">
+                                <div class="circle-inner">
+                                    <div class="circle-text">100<span>%</span></div>
+                                </div>
+                            </div>
+                            <div class="ring-label">
+                                <span class="lang-es">Cuota XI inicial</span>
+                                <span class="lang-en">Starting XI quota</span>
+                            </div>
+                        </div>
+
+                        <div class="ring-item">
+                            <div class="circle-wrap ring-99" id="ring-minutos">
+                                <div class="circle-inner">
+                                    <div class="circle-text">99<span>%</span></div>
+                                </div>
+                            </div>
+                            <div class="ring-label">
+                                <span class="lang-es">Minutos jugados</span>
+                                <span class="lang-en">Minutes played</span>
+                            </div>
+                        </div>
+
+                        <div class="ring-item">
+                            <div class="circle-wrap ring-0">
+                                <div class="circle-inner">
+                                    <div class="circle-text">0<span>%</span></div>
+                                </div>
+                            </div>
+                            <div class="ring-label">
+                                <span class="lang-es">Participaciones de gol</span>
+                                <span class="lang-en">Goal participations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </section>
 
         <section id="carrera">
             <h2 class="section-title">
@@ -744,6 +1058,21 @@
 
         // 4. Actualizar el Año del Footer Automáticamente
         document.getElementById('current-year').innerText = new Date().getFullYear();
+    </script>
+    <script>
+    // 5. Función que lee el JSON para las stats (Si utilizas GitHub Actions / Archivo local)
+    fetch('stats.json')
+        .then(response => response.json())
+        .then(data => {
+            // Actualizar partidos
+            if(document.getElementById('stat-partidos')) {
+                document.getElementById('stat-partidos').innerText = data.partidos;
+            }
+            // Si en el JSON guardas un ID llamado 'stat-minutos', agrégalo en el HTML donde corresponde.
+            // Ejemplo de uso si tienes el % exacto de minutos en el JSON:
+            // document.querySelector('#ring-minutos .circle-text').innerHTML = `${data.minutos_porcentaje}<span>%</span>`;
+        })
+        .catch(error => console.log('Estadísticas locales listas por defecto. (stats.json no encontrado):', error));
     </script>
 
 </body>
