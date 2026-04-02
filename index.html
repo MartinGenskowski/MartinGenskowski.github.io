@@ -855,7 +855,7 @@
                                     <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v4H7zm8 0h2v4h-2zm-4 0h2v4h-2z"/></svg></div>
                                     <span class="lang-es">Partidos</span><span class="lang-en">Matches</span>
                                 </div>
-                                <div class="stat-number" id="stat-partidos">3</div>
+                                <div class="stat-number">3</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
@@ -1093,27 +1093,6 @@
 
         // 4. Actualizar el Año del Footer Automáticamente
         document.getElementById('current-year').innerText = new Date().getFullYear();
-    </script>
-    <script>
-        // 5. Función que lee el JSON de Transfermarkt y actualiza TODO dinámicamente
-        function actualizarAnillo(id, porcentaje) {
-            const ring = document.getElementById(id);
-            const text = document.getElementById(id + '-text');
-            if(ring && text) {
-                text.innerHTML = `${porcentaje}<span>%</span>`;
-                // Genera el gráfico circular usando el color azul oscuro de Transfermarkt (#0a1c3a)
-                ring.style.background = `conic-gradient(#0a1c3a ${porcentaje}%, #e0e0e0 0)`;
-            }
-        }
-
-        fetch('stats.json')
-            .then(response => response.json())
-            .then(data => {
-                if(data.partidos) {
-                    document.getElementById('stat-partidos').innerText = data.partidos;
-                }
-            })
-            .catch(error => console.log('Usando dato manual de partidos.'));
     </script>
 
 </body>
