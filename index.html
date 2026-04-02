@@ -796,7 +796,7 @@
                 <div class="stats-wrapper">
                     <div class="stats-header-top">
                         <div>
-                            <div class="stats-league-title" id="liga-nombre">-</div>
+                            <div class="stats-league-title" id="liga-nombre">I Lyga 2026</div>
                             <div class="stats-league-subtitle">
                                 <span id="liga-partidos-posibles">-</span>
                             </div>
@@ -819,7 +819,7 @@
                                     </div>
                                     <span class="lang-es">Partidos</span><span class="lang-en">Matches</span>
                                 </div>
-                                <div class="stat-number" id="stat-partidos">-</div>
+                                <div class="stat-number" id="stat-partidos">3</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
@@ -870,7 +870,7 @@
                         <div class="ring-item">
                             <div class="circle-wrap" id="ring-xi">
                                 <div class="circle-inner">
-                                    <div class="circle-text" id="ring-xi-text">0<span>%</span></div>
+                                    <div class="circle-text" id="ring-xi-text">100<span>%</span></div>
                                 </div>
                             </div>
                             <div class="ring-label">
@@ -882,7 +882,7 @@
                         <div class="ring-item">
                             <div class="circle-wrap" id="ring-minutos">
                                 <div class="circle-inner">
-                                    <div class="circle-text" id="ring-minutos-text">0<span>%</span></div>
+                                    <div class="circle-text" id="ring-minutos-text">99<span>%</span></div>
                                 </div>
                             </div>
                             <div class="ring-label">
@@ -1065,28 +1065,14 @@
             }
         }
 
-        // Reemplaza tu script de fetch actual por este:
         fetch('stats.json')
             .then(response => response.json())
             .then(data => {
-                // --- NUEVO: Liga y Partidos Posibles ---
-                document.getElementById('liga-nombre').innerText = data.liga || 'Competición';
-                document.getElementById('liga-partidos-posibles').innerText = data.partidos_posibles || '-';
-
-                // --- Datos de las tarjetas ---
-                document.getElementById('stat-partidos').innerText = data.partidos || '0';
-                document.getElementById('stat-goles').innerText = data.goles || '0';
-                document.getElementById('stat-asistencias').innerText = data.asistencias || '0';
-                document.getElementById('stat-amarillas').innerText = data.amarillas || '0';
-                document.getElementById('stat-segundas-amarillas').innerText = data.segundas_amarillas || '0';
-                document.getElementById('stat-rojas').innerText = data.rojas || '0';
-                
-                // --- Anillos ---
-                actualizarAnillo('ring-xi', data.cuota_xi || 0);
-                actualizarAnillo('ring-minutos', data.minutos_jugados || 0);
-                actualizarAnillo('ring-participaciones', data.participaciones_gol || 0);
+                if(data.partidos) {
+                    document.getElementById('stat-partidos').innerText = data.partidos;
+                }
             })
-            .catch(error => console.log('Error:', error));
+            .catch(error => console.log('Usando dato manual de partidos.'));
     </script>
 
 </body>
