@@ -18,7 +18,6 @@
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚽%3C/text%3E%3C/svg%3E">
     <style>
-        /* Aquí siguen tus estilos (CSS) como antes... */
         /* IMPORTACIÓN DE FUENTES */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
 
@@ -488,12 +487,8 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
+            background: conic-gradient(#e0e0e0 100%, #f0f0f0 0); /* Fondo inicial gris */
         }
-
-        /* Configuración de porcentajes */
-        .ring-100 { background: conic-gradient(var(--tm-dark) 100%, #f0f0f0 0); }
-        .ring-99 { background: conic-gradient(var(--tm-dark) 99%, #f0f0f0 0); }
-        .ring-0 { background: conic-gradient(var(--tm-dark) 0%, #f0f0f0 100%); }
 
         .circle-inner {
             width: 85px;
@@ -801,10 +796,9 @@
                 <div class="stats-wrapper">
                     <div class="stats-header-top">
                         <div>
-                            <div class="stats-league-title">I Lyga 2026</div>
+                            <div class="stats-league-title" id="liga-nombre">-</div>
                             <div class="stats-league-subtitle">
-                                <span class="lang-es">3 partidos posibles</span>
-                                <span class="lang-en">3 possible matches</span>
+                                <span id="liga-partidos-posibles">-</span>
                             </div>
                         </div>
                         <div class="stats-league-icon">
@@ -825,7 +819,7 @@
                                     </div>
                                     <span class="lang-es">Partidos</span><span class="lang-en">Matches</span>
                                 </div>
-                                <div class="stat-number" id="stat-partidos">3</div>
+                                <div class="stat-number" id="stat-partidos">-</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
@@ -834,7 +828,7 @@
                                     </div>
                                     <span class="lang-es">Goles</span><span class="lang-en">Goals</span>
                                 </div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-number" id="stat-goles">-</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
@@ -843,7 +837,7 @@
                                     </div>
                                     <span class="lang-es">Asistencias</span><span class="lang-en">Assists</span>
                                 </div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-number" id="stat-asistencias">-</div>
                             </div>
                         </div>
 
@@ -853,30 +847,30 @@
                                     <div class="stat-icon"><div class="card-icon card-yellow"></div></div>
                                     <span class="lang-es">Tarjetas amarillas</span><span class="lang-en">Yellow cards</span>
                                 </div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-number" id="stat-amarillas">-</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
                                     <div class="stat-icon"><div class="card-icon card-second-yellow"></div></div>
-                                    <span class="lang-es">Segundas tarjetas amarillas</span><span class="lang-en">Second yellow cards</span>
+                                    <span class="lang-es">Segundas amarillas</span><span class="lang-en">Second yellow</span>
                                 </div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-number" id="stat-segundas-amarillas">-</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-label-box">
                                     <div class="stat-icon"><div class="card-icon card-red"></div></div>
                                     <span class="lang-es">Tarjetas rojas</span><span class="lang-en">Red cards</span>
                                 </div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-number" id="stat-rojas">-</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="stats-rings-container">
                         <div class="ring-item">
-                            <div class="circle-wrap ring-100">
+                            <div class="circle-wrap" id="ring-xi">
                                 <div class="circle-inner">
-                                    <div class="circle-text">100<span>%</span></div>
+                                    <div class="circle-text" id="ring-xi-text">0<span>%</span></div>
                                 </div>
                             </div>
                             <div class="ring-label">
@@ -886,9 +880,9 @@
                         </div>
 
                         <div class="ring-item">
-                            <div class="circle-wrap ring-99" id="ring-minutos">
+                            <div class="circle-wrap" id="ring-minutos">
                                 <div class="circle-inner">
-                                    <div class="circle-text">99<span>%</span></div>
+                                    <div class="circle-text" id="ring-minutos-text">0<span>%</span></div>
                                 </div>
                             </div>
                             <div class="ring-label">
@@ -898,9 +892,9 @@
                         </div>
 
                         <div class="ring-item">
-                            <div class="circle-wrap ring-0">
+                            <div class="circle-wrap" id="ring-participaciones">
                                 <div class="circle-inner">
-                                    <div class="circle-text">0<span>%</span></div>
+                                    <div class="circle-text" id="ring-participaciones-text">0<span>%</span></div>
                                 </div>
                             </div>
                             <div class="ring-label">
@@ -922,7 +916,7 @@
                 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyKqcfHcMplk42cOLoQr6Ij9MH6JlNHrgh4A&s" alt="Logo Fk Garliava" class="timeline-logo">
+                        <img src="logo/fkg.png" alt="Logo Fk Garliava" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2025 - 2026</span>
                             <h3 class="timeline-team">Fk Garliava</h3>
@@ -933,7 +927,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc_27tGYmi84YI44WHXk7olR9Yb2-OK6tGGg&s" alt="Logo Chimbarongo FC" class="timeline-logo">
+                        <img src="logo/chimba.jpeg" alt="Logo Chimbarongo FC" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2024</span>
                             <h3 class="timeline-team">Chimbarongo FC</h3>
@@ -944,7 +938,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Logo_Deportes_Linares.png" alt="Logo Deportes Linares" class="timeline-logo">
+                        <img src="logo/lina.png" alt="Logo Deportes Linares" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2023</span>
                             <h3 class="timeline-team">Deportes Linares</h3>
@@ -955,7 +949,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Logo-DeportesValdivia2018.png" alt="Logo Deportes Valdivia" class="timeline-logo">
+                        <img src="logo/depov.png" alt="Logo Deportes Valdivia" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2022</span>
                             <h3 class="timeline-team">Deportes Valdivia</h3>
@@ -966,7 +960,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://static.wikia.nocookie.net/futbolchileno/images/c/cf/EmblemaO%27Higgins.png/revision/latest?cb=20210615074912&path-prefix=es" alt="Logo O'Higgins" class="timeline-logo">
+                        <img src="logo/ohi.webp" alt="Logo O'Higgins" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2019 - 2022</span>
                             <h3 class="timeline-team">O'Higgins 
@@ -979,7 +973,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Emblema_del_Club_Universidad_de_Chile.png" alt="Logo U de Chile" class="timeline-logo">
+                        <img src="logo/udc.png" alt="Logo U de Chile" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2017 - 2018</span>
                             <h3 class="timeline-team">U. de Chile 
@@ -992,7 +986,7 @@
 
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Escudo_Palestino_Oficial.png" alt="Logo Palestino" class="timeline-logo">
+                        <img src="logo/pal.png" alt="Logo Palestino" class="timeline-logo">
                         <div class="timeline-title-wrap">
                             <span class="timeline-year">2012 - 2017</span>
                             <h3 class="timeline-team">Palestino 
@@ -1060,19 +1054,39 @@
         document.getElementById('current-year').innerText = new Date().getFullYear();
     </script>
     <script>
-    // 5. Función que lee el JSON para las stats (Si utilizas GitHub Actions / Archivo local)
-    fetch('stats.json')
-        .then(response => response.json())
-        .then(data => {
-            // Actualizar partidos
-            if(document.getElementById('stat-partidos')) {
-                document.getElementById('stat-partidos').innerText = data.partidos;
+        // 5. Función que lee el JSON de Transfermarkt y actualiza TODO dinámicamente
+        function actualizarAnillo(id, porcentaje) {
+            const ring = document.getElementById(id);
+            const text = document.getElementById(id + '-text');
+            if(ring && text) {
+                text.innerHTML = `${porcentaje}<span>%</span>`;
+                // Genera el gráfico circular usando el color azul oscuro de Transfermarkt (#0a1c3a)
+                ring.style.background = `conic-gradient(#0a1c3a ${porcentaje}%, #e0e0e0 0)`;
             }
-            // Si en el JSON guardas un ID llamado 'stat-minutos', agrégalo en el HTML donde corresponde.
-            // Ejemplo de uso si tienes el % exacto de minutos en el JSON:
-            // document.querySelector('#ring-minutos .circle-text').innerHTML = `${data.minutos_porcentaje}<span>%</span>`;
-        })
-        .catch(error => console.log('Estadísticas locales listas por defecto. (stats.json no encontrado):', error));
+        }
+
+        // Reemplaza tu script de fetch actual por este:
+        fetch('stats.json')
+            .then(response => response.json())
+            .then(data => {
+                // --- NUEVO: Liga y Partidos Posibles ---
+                document.getElementById('liga-nombre').innerText = data.liga || 'Competición';
+                document.getElementById('liga-partidos-posibles').innerText = data.partidos_posibles || '-';
+
+                // --- Datos de las tarjetas ---
+                document.getElementById('stat-partidos').innerText = data.partidos || '0';
+                document.getElementById('stat-goles').innerText = data.goles || '0';
+                document.getElementById('stat-asistencias').innerText = data.asistencias || '0';
+                document.getElementById('stat-amarillas').innerText = data.amarillas || '0';
+                document.getElementById('stat-segundas-amarillas').innerText = data.segundas_amarillas || '0';
+                document.getElementById('stat-rojas').innerText = data.rojas || '0';
+                
+                // --- Anillos ---
+                actualizarAnillo('ring-xi', data.cuota_xi || 0);
+                actualizarAnillo('ring-minutos', data.minutos_jugados || 0);
+                actualizarAnillo('ring-participaciones', data.participaciones_gol || 0);
+            })
+            .catch(error => console.log('Error:', error));
     </script>
 
 </body>

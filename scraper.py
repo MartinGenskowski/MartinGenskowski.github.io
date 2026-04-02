@@ -1,42 +1,79 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import datetime
+import re
 
-# 1. La URL del perfil de Transfermarkt (REEMPLAZA ESTO por la URL real de Martín)
-URL = "https://www.transfermarkt.es/martin-genskowski/profil/spieler/1005971"
+URL = "https://www.transfermarkt.es/martin-genskowski/leistungsdaten/spieler/1005971"
 
-# 2. Engañamos a Transfermarkt para que crea que somos un navegador web normal
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "es-ES,es;q=0.9"
 }
 
+def limpiar_numero(texto):
+    if not texto or texto.strip() == '-' or texto.strip() == '':
+        return "0"
+    return re.sub(r'[^0-9]', '', texto)
+
 try:
-    # 3. Descargamos la página
-    response = requests.get(URL, headers=headers)
+    print("Conectando con Transfermarkt...")
+    response = requests.get(URL, headers=headers, timeout=10)
     response.raise_for_status()
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    # 4. Buscamos los datos en el HTML (¡ATENCIÓN! Estas clases de HTML pueden variar en Transfermarkt)
-    # Ejemplo genérico buscando en la tabla de rendimiento:
+    soup = BeautifulSoup(response.text, 'html.parser')
     
-    # Supongamos que buscamos el total de partidos jugados esta temporada
-    # Vas a tener que inspeccionar la página de TM para encontrar la clase exacta
-    partidos_element = soup.find('span', class_='info-table__content--bold') 
-    partidos = partidos_element.text.strip() if partidos_element else "N/A"
+    # 1. Extraer nombre de la Liga y Temporada
+    # Buscamos el encabezado de la caja de rendimiento
+    header_liga = soup.find('div', class_='box-headline')
+    nombre_liga = "Competición"
+    if header_liga:
+        nombre_liga = header_liga.text.strip().split('\n')[0]
 
-    # 5. Preparamos el archivo JSON
-    stats_data = {
-        "partidos": partidos,
-        "minutos": "Por definir", # Repite el proceso de búsqueda para los minutos
-        "ultima_actualizacion": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    # 2. Extraer "partidos posibles"
+    # Este texto suele estar en un div pequeño arriba de la tabla
+    partidos_posibles_text = "Datos no disponibles"
+    info_div = soup.find('div', class_='large-8 columns')
+    if info_div:
+        footer_text = info_div.find('div', class_='table-footer')
+        if not footer_text: # Si no está en el footer, buscar texto plano
+             match = re.search(r'\d+ partidos posibles', soup.text)
+             if match:
+                 partidos_posibles_text = match.group(0)
+
+    # 3. Extraer estadísticas de la tabla
+    stats = {
+        "liga": nombre_liga,
+        "partidos_posibles": partidos_posibles_text,
+        "partidos": "0", "goles": "0", "asistencias": "0",
+        "amarillas": "0", "segundas_amarillas": "0", "rojas": "0",
+        "cuota_xi": "0", "minutos_jugados": "0", "participaciones_gol": "0"
     }
 
-    # 6. Guardamos los datos en stats.json
-    with open('stats.json', 'w') as f:
-        json.dump(stats_data, f, indent=4)
-        
-    print("Estadísticas actualizadas con éxito.")
+    tabla = soup.find('table', class_='items')
+    if tabla:
+        tfoot = tabla.find('tfoot')
+        if tfoot:
+            columnas = tfoot.find_all('td')
+            if len(columnas) >= 8:
+                stats["partidos"] = limpiar_numero(columnas[2].text)
+                stats["goles"] = limpiar_numero(columnas[3].text)
+                stats["asistencias"] = limpiar_numero(columnas[4].text)
+                stats["amarillas"] = limpiar_numero(columnas[5].text)
+                stats["segundas_amarillas"] = limpiar_numero(columnas[6].text)
+                stats["rojas"] = limpiar_numero(columnas[7].text)
+
+    # Extraer porcentajes (Anillos)
+    for caja in soup.find_all('div', class_='large-4'):
+        texto_caja = caja.text.lower()
+        num_span = caja.find('span')
+        if num_span:
+            numero = limpiar_numero(num_span.text)
+            if 'cuota xi' in texto_caja: stats["cuota_xi"] = numero
+            elif 'minutos' in texto_caja: stats["minutos_jugados"] = numero
+            elif 'participaciones' in texto_caja: stats["participaciones_gol"] = numero
+
+    with open('stats.json', 'w', encoding='utf-8') as f:
+        json.dump(stats, f, indent=4, ensure_ascii=False)
+    print("Archivo stats.json actualizado con éxito.")
 
 except Exception as e:
-    print(f"Error al extraer datos: {e}")
+    print(f"Error: {e}")
